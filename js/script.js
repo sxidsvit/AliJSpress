@@ -75,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const randomSort = item => item.sort(() => Math.random() - 0.5);
 
     // Выбор карточек из определенной категории
+    const wrapperCategoryFilter = category => goods => goods.filter(item => item.category.includes(category));
+
     const chooseCategory = event => {
         event.preventDefault();
         const target = event.target;
@@ -82,8 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target.classList.contains('category-item')) {
             const category = target.dataset.category;
             console.log(category);
-            const categoryFilter = goods => goods.filter(item => item.category.includes(category))
-            categoryFilter.bind(this, category)
+            // const categoryFilter = goods => goods.filter(item => item.category.includes(category))
+            // categoryFilter.bind(this, category)
+            const categoryFilter = wrapperCategoryFilter(category);
             getGoods(renderCard, categoryFilter);
         };
     };
