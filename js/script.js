@@ -74,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Сортировка карточек
     const randomSort = item => item.sort(() => Math.random() - 0.5);
 
-    // Выбор карточек из определенной категории
+    //  Используем замыкание и создаем функцию для фильтрации товаров по категории.
     const wrapperCategoryFilter = category => goods => goods.filter(item => item.category.includes(category));
 
+    // Выбор карточек из определенной категории
     const chooseCategory = event => {
         event.preventDefault();
         const target = event.target;
