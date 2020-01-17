@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         spinner.style.display = 'block'
         // return
         setTimeout(() => {
-            fetch('../db/db.json') // извлечение из БД
+            fetch('/db/db.json') // извлечение из БД
                 .then(response => response.json())
                 .then(filter)  // фильтрация
                 .then(handler); // рендеринг
