@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishlist = []
 
     // Создаем объект корзины с id товаров и их количеством
-    let goodsBasket = {}
+    const goodsBasket = {}
 
     //  функция, показывающая спинер в каталоге и в корзине
     const loading = () => {
@@ -96,9 +96,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const calcTotalPrice = goods => {
+        // традиционный способ суммирования
+        // let sum = 0
+        // for (const item of goods) {
+        //     sum += item.price * goodsBasket[item.id]
+        //     console.log('item: ', item);
+        // }
+        //  продвинутый метод суммирования
+        let sum = goods.reduce((accum, item) => {
+            return accum + item.price * goodsBasket[item.id]
+        }, 0)
+        cart.querySelector('.cart-total>span').textContent = sum.toFixed(2)
+
+    }
+
     // Открываем корзину
     //  - фильтр товаров для корзины
-    const showCardBasket = goods => goods.filter(item => goodsBasket.hasOwnProperty(item.id))
+    const showCardBasket = goods => {
+        const basketGoods = goods.filter(item => goodsBasket.hasOwnProperty(item.id))
+        calcTotalPrice(basketGoods)
+        return basketGoods
+    }
     //  - рендеринг корзины
     const openCart = event => {
         event.preventDefault();
@@ -179,7 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cookieQuery = get => {
         if (get) {
             if (getCookie('goodsBasket')) {
-                goodsBasket = JSON.parse(getCookie('goodsBasket'))
+                Object.assign(goodsBasket, JSON.parse(getCookie('goodsBasket')))
+                // goodsBasket = JSON.parse(getCookie('goodsBasket'))
+                // console.log('goodsBasket: ', JSON.parse(getCookie('goodsBasket')));
             }
             checkCount()
         } else {
