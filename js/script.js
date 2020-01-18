@@ -122,12 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Извлечение карточек из БД с их последующей фильтрацией и рендиренгом
     const getGoods = (handler, filter) => {
         loading() // спиннер
-        // setTimeout(() => { 
-        fetch('http://git.lekua.in.ua/AliJSpress/db/db.json') // извлечение товаров из БД
-            .then(response => response.json())
-            .then(filter)  // фильтрация
-            .then(handler); // рендеринг
-        // }, 1000);
+        setTimeout(() => {
+            fetch('http://git.lekua.in.ua/AliJSpress/db/db.json') // извлечение товаров из БД
+                .then(response => response.json())
+                .then(filter)  // фильтрация
+                .then(handler); // рендеринг
+        }, 1000);
     };
 
     // Сортировка карточек в случайном порядке
