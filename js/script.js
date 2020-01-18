@@ -199,8 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (get) {
             if (getCookie('goodsBasket')) {
                 Object.assign(goodsBasket, JSON.parse(getCookie('goodsBasket')))
-                // goodsBasket = JSON.parse(getCookie('goodsBasket'))
-                // console.log('goodsBasket: ', JSON.parse(getCookie('goodsBasket')));
             }
             checkCount()
         } else {
@@ -268,6 +266,23 @@ document.addEventListener('DOMContentLoaded', () => {
         getGoods(renderCard, goods => goods.filter(item => wishlist.includes(item.id)))
     }
 
+    const removeGoods = id => {
+        delete goodsBasket[id]
+        checkCount()
+        cookieQuery()
+        getGoods(renderBasket, showCardBasket)
+    }
+
+    const handlerBasket = () => {
+        const target = event.target
+        if (target.classList.contains('goods-add-wishlist')) {
+            toggleWhishlist(target.dataset.goodsId, target)
+        }
+        if (target.classList.contains('goods-delete')) {
+            removeGoods(target.dataset.goodsId)
+        }
+    }
+
     // Навешиваем обработчики событий
     category.addEventListener('click', chooseCategory); // товары из выбранной категории
     search.addEventListener('submit', searchGoods)
@@ -275,6 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wishlistBtn.addEventListener('click', showWishList) // товары из списка желаний
     cartBtn.addEventListener('click', openCart);
     cart.addEventListener('click', closeCart);
+    cartWrapper.addEventListener('click', handlerBasket)
 
     // Загрузка карточек при инициализации магазина
     getGoods(renderCard, randomSort);
