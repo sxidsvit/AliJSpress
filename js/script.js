@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Извлечение карточек из БД с их последующей фильтрацией и рендиренгом
     const getGoods = (handler, filter) => {
         loading() // спиннер
-        setTimeout(() => {
+        setTimeout(() => { // для демонстрации спинера
             fetch('http://git.lekua.in.ua/AliJSpress/db/db.json') // извлечение товаров из БД
                 .then(response => response.json())
                 .then(filter)  // фильтрация
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (get) {
             if (localStorage.getItem('wishlist')) {
                 const wishlistStorage = JSON.parse(localStorage.getItem('wishlist'))
-                wishlistStorage.forEach(id => wishlist.push(id))
+                wishlist.push(...wishlistStorage)
             }
             checkCount()
         } else {
