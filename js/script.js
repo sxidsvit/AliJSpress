@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 goodsWrapper.append(createGardsGoods(id, title, price, imgMin));
             })
         } else {
-            goodsWrapper.textContent = ' Извините, мы не нашли товаров по вашему запросу!'
+            goodsWrapper.textContent = '❌ Извините, мы не нашли товаров по вашему запросу!'
         }
     }
 
