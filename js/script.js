@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cart.style.display = 'flex';
         document.addEventListener('keyup', closeCart);
         getGoods(renderBasket, showCardBasket)
+        goodsWrapper.innerHTML = ''
     };
 
     // Закрываем корзину
@@ -123,10 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(filter)  // фильтрация
             .then(handler); // рендеринг
-        // spinner.style.display = 'none'
     };
 
-    // Сортировка карточек
+    // Сортировка карточек в случайном порядке
     const randomSort = item => item.sort(() => Math.random() - 0.5);
 
     //  Используем замыкание и создаем функцию для фильтрации товаров по категории.
@@ -179,16 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.cookie = `goodsBasket=${JSON.stringify(goodsBasket)};max-age=86400e3`
         }
-        // console.log('goodsBasket: ', goodsBasket);
-
     }
 
     // Количество товаров в корзине и в списке понравившихся
     const checkCount = () => {
         wishlistCounter.textContent = wishlist.length
         cardCounter.textContent = Object.keys(goodsBasket).length
-        // console.log('Object.keys(goodsBasket): ', Object.keys(goodsBasket));
-
     }
 
     // Работа с localStorage в котором храним понравившиеся товары
