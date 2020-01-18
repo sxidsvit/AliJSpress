@@ -16,12 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Создаем объект корзины с id товаров и их количеством
     let goodsBasket = {}
 
-    //  функция показывающая спинер
+    //  функция, показывающая спинер в каталоге и в корзине
     const loading = () => {
-        goodsWrapper.innerHTML = `
+        const spinner = `
             <div id="spinner" ><div class="spinner-loading">
             <div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div></div></div>
         `
+        goodsWrapper.innerHTML = spinner // каталог
+        cartWrapper.innerHTML = spinner // корзина
     }
 
     // Создаем карточку товара для каталога
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="goods-add-wishlist ${wishlist.includes(id) ? 'active' : ''}" data-goods-id="${id} "></button>
                     <button class="goods-delete" data-goods-id="${id}"></button>
                 </div>
-                <div class="goods-count">1</div>
+                <div class="goods-count">${goodsBasket[id]}</div>
             </div>
         `;
         return card;
@@ -119,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Извлечение карточек из БД с их последующей фильтрацией и рендиренгом
     const getGoods = (handler, filter) => {
-        loading()
+        loading() // спиннер
         fetch('http://git.lekua.in.ua/AliJSpress/db/db.json') // извлечение товаров из БД
             .then(response => response.json())
             .then(filter)  // фильтрация
@@ -174,7 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cookieQuery = get => {
         if (get) {
-            goodsBasket = JSON.parse(getCookie('goodsBasket'))
+            if (getCookie('goodsBasket')) {
+                goodsBasket = JSON.parse(getCookie('goodsBasket'))
+            }
             checkCount()
         } else {
             document.cookie = `goodsBasket=${JSON.stringify(goodsBasket)};max-age=86400e3`
