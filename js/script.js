@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Извлечение карточек из БД с их последующей фильтрацией и рендиренгом
     const getGoods = (handler, filter) => {
         loading() // спиннер
-        setTimeout(() => { // вводим временную задержку для демонстрации спинера
+        setTimeout(() => { // вводим временную задержку для демонстрации спиннера
             fetch('http://git.lekua.in.ua/AliJSpress/db/db.json') // извлечение товаров из БД
                 .then(response => response.json())
                 .then(filter)  // фильтрация
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="goods-price-count">
                 <div class="goods-trigger">
-                    <button class="goods-add-wishlist ${wishlist.includes(id) ? 'active' : ''}" data-goods-id="${id} "></button>
+                    <button class="goods-add-wishlist ${wishlist.includes(id) ? 'active' : ''}" data-goods-id="${id}"></button>
                     <button class="goods-delete" data-goods-id="${id}"></button>
                 </div>
                 <div class="goods-count">${goodsBasket[id]}</div>
@@ -110,7 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //  Рендеринг товаров, попавших в список желаний
     const showWishList = () => {
-        getGoods(renderCard, goods => goods.filter(item => wishlist.includes(item.id)))
+        console.log('showWishList: ', wishlist);
+        const filterWishlist = goods => goods.filter(item => wishlist.includes(item.id))
+        getGoods(renderCard, filterWishlist)
     }
 
     // Расчет стоимости всех товаров в корзине
@@ -237,12 +239,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Удаляем или записываем id товара в массив WISHLIST (понравившиеся товары)
-    const toggleWhishlist = (id, elem) => {
+    const toggleWishlist = (id, elem) => {
         if (wishlist.includes(id)) {
+            console.log('wishlist: ', wishlist);
             wishlist.splice(wishlist.indexOf(id), 1)
+            console.log('wishlist: ', wishlist);
             elem.classList.remove('active') // убираем подсветку иконки "сердечко"
         } else {
             wishlist.push(id)
+            console.log('wishlist: ', wishlist);
             elem.classList.add('active') // добавляем подсветку иконки "сердечко"
         }
         checkCount() // подсчитываем количество понравившихся товаров
@@ -265,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = event.target
         //  если товар  добавляем в список желаний
         if (target.classList.contains('card-add-wishlist')) {
-            toggleWhishlist(target.dataset.goodsId, target)
+            toggleWishlist(target.dataset.goodsId, target)
         }
         //  если товар  добавляем в корзину
         if (target.classList.contains('card-add-cart')) {
@@ -285,22 +290,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обработка событий инициализированных внутри корзины
     const handlerBasket = () => {
         const target = event.target
-        if (target.classList.contains('goods-add-wishlist')) { // если кликнули по иконке "сердечко"
-            toggleWhishlist(target.dataset.goodsId, target)
+        if (target.classList.contains('goods-add-wishlist')) { // кликнули по иконке "сердечко"
+            toggleWishlist(target.dataset.goodsId, target)
         }
-        if (target.classList.contains('goods-delete')) { // если кликнули по иконке "мусорное ведро"
+        if (target.classList.contains('goods-delete')) { // кликнули по иконке "мусорное ведро"
             removeGoods(target.dataset.goodsId)
         }
     }
 
     // Назначаем обработчики событий
-    category.addEventListener('click', chooseCategory); // товары из выбранной категории
-    search.addEventListener('submit', searchGoods)
-    goodsWrapper.addEventListener('click', handlerGoods) // все товары
-    wishlistBtn.addEventListener('click', showWishList) // товары из списка желаний
-    cartBtn.addEventListener('click', openCart);
-    cart.addEventListener('click', closeCart);
-    cartWrapper.addEventListener('click', handlerBasket)
+    category.addEventListener('click', chooseCategory) // показать товары из выбранной категории
+    search.addEventListener('submit', searchGoods) // поиск товара
+    goodsWrapper.addEventListener('click', handlerGoods) // показать все товары
+    wishlistBtn.addEventListener('click', showWishList) // показать товары из списка желаний
+    cartBtn.addEventListener('click', openCart) // открыть корзину
+    cart.addEventListener('click', closeCart) // закрыть корзину
+    cartWrapper.addEventListener('click', handlerBasket) // клик по иконкам внутри корзины
 
     // Инициализация магазина
     const storeInit = () => {
