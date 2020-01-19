@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //  Рендеринг товаров, попавших в список желаний
     const showWishList = () => {
-        console.log('showWishList: ', wishlist);
         const filterWishlist = goods => goods.filter(item => wishlist.includes(item.id))
         getGoods(renderCard, filterWishlist)
     }
@@ -241,13 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Удаляем или записываем id товара в массив WISHLIST (понравившиеся товары)
     const toggleWishlist = (id, elem) => {
         if (wishlist.includes(id)) {
-            console.log('wishlist: ', wishlist);
             wishlist.splice(wishlist.indexOf(id), 1)
-            console.log('wishlist: ', wishlist);
             elem.classList.remove('active') // убираем подсветку иконки "сердечко"
         } else {
             wishlist.push(id)
-            console.log('wishlist: ', wishlist);
             elem.classList.add('active') // добавляем подсветку иконки "сердечко"
         }
         checkCount() // подсчитываем количество понравившихся товаров
