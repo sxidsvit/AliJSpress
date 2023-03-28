@@ -1,14 +1,14 @@
 ## AliJSpress на Javascript
 
-**Цель:** Cовершенствование скиллов программирования на JavaScript
+**Goal:** Improving JavaScript programming skills
 
-**Какие задачи нужно было решить:**
+**What tasks needed to be solved:**
 
-1. Написать свой простой AliExpress на JavaScript
-2. Работа со списком желаний и корзиной используя localStorage и cookies
-3. Углубить свое понимание новых конструкций JavaScript
-4. Совершенствование умений и навыков в написании программ на JavaScript с использованием новых стандартов языка
+1. Write your simple AliExpress in JavaScript
+2. Working with wishlist and shopping cart using localStorage and cookies
+3. Deepen your understanding of new JavaScript constructs
+4. Improving skills and abilities in writing JavaScript programs using new language standards
 
 ![Demo](demo.gif)
 
-[_Посмотреть сайт_](http://git.lekua.in.ua/AliJSpress/)
+
